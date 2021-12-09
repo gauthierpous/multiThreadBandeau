@@ -1,4 +1,5 @@
 package bandeau;
+
 import java.util.List;
 import java.util.LinkedList;
 
@@ -22,6 +23,7 @@ class ScenarioElement {
 public class Scenario {
 
     private final List<ScenarioElement> myElements = new LinkedList<>();
+    private final Bandeau bandeau = new Bandeau();
 
     /**
      * Ajouter un effect au scenario.
@@ -33,16 +35,14 @@ public class Scenario {
         myElements.add(new ScenarioElement(e, repeats));
     }
 
+
     /**
      * Jouer ce scenario sur un bandeau
      *
      * @param b le bandeau ou s'afficher.
      */
     public void playOn(Bandeau b) {
-        for (ScenarioElement element : myElements) {
-            for (int repeats = 0; repeats < element.repeats; repeats++) {
-                element.effect.playOn(b);
-            }
-        }
+        MonThread monThread = new MonThread(b, this.myElements);
+        monThread.start();
     }
 }
