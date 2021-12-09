@@ -13,9 +13,11 @@ public class MonThread extends Thread{
 
     @Override
     public void run() {
-        for (ScenarioElement element : Elements) {
-            for (int repeats = 0; repeats < element.repeats; repeats++) {
-                element.effect.playOn(bandeau);
+        synchronized(bandeau){
+            for (ScenarioElement element : Elements) {
+                for (int repeats = 0; repeats < element.repeats; repeats++) {
+                    element.effect.playOn(bandeau);
+                }
             }
         }
     }
